@@ -1,0 +1,70 @@
+service: lumix-claim-regenerator
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  memorySize: 256
+  timeout: 59
+  environment:
+    NODE_OPTIONS: '--enable-source-maps'
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource:
+            - arn:aws:dynamodb:us-east-1:*:table/timesheetstrings
+
+functions:
+  regenerateClaim:
+    handler: handler.regenerateClaim
+    events:
+      - httpApi:
+          path: /regenerateclaim
+          method: POST
+          cors:
+            allowedOrigins:
+              - http://localhost:3000
+              - https://www.app.lumixhealth.com
+            allowedHeaders:
+              - Content-Type
+              - Authorization
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: true
+            exposedResponseHeaders:
+              - '*'
+            maxAge: 300
+  getClaimChain:
+    handler: handler.getClaimChain
+    events:
+      - http:
+          path: getclaimchain
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline
+
+package:
+  patterns:
+    - '!node_modules/.prisma/**'
+    - '!node_modules/@prisma/engines/**'
+    - '!node_modules/prisma/**'
+    - '!.env*'
+    - '!test/**'
+    - '!jest.config.js'
+    - '!terraform/**'
+    - '!scripts/**'
+    - '!README.md'

@@ -1,0 +1,16 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /regenerateclaim",
+  "rawPath": "/regenerateclaim",
+  "rawQueryString": "",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "requestContext": {
+    "http": {
+      "method": "POST",
+      "path": "/regenerateclaim"
+    }
+  },
+  "body": "{\"companyId\": \"5\", \"timesheetId\": \"011dc6f5-8044-48df-bbfb-a9f9da02cc02\", \"updatedFields\": {\"diagnosisCode\": \"R69\", \"amountOfUnits\": 5, \"totalAmountBill\": 85.85, \"insuranceProvider\": \"Ucare\"}}"
+} 

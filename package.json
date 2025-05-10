@@ -1,0 +1,19 @@
+{
+  "name": "lumix-claim-regenerator",
+  "version": "1.0.0",
+  "description": "Lumix claim regeneration service",
+  "main": "handler.js",
+  "scripts": {
+    "start": "serverless offline start --httpPort 3001",
+    "deploy": "serverless deploy",
+    "test": "serverless invoke local -f regenerateClaim -p test-event.json"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1531.0",
+    "uuid": "^9.0.1"
+  }
+} 
